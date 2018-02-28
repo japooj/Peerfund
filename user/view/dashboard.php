@@ -1,4 +1,4 @@
-<?php 
+<?php
  $userID = $_SESSION['hlbank_user']['id'];
  $usrName = $_SESSION['hlbank_user_name'];
  $ipAddress = $_SERVER['REMOTE_ADDR'];
@@ -49,7 +49,7 @@ while ($row = dbFetchAssoc($result)){
         <li class="active"><?php echo $pageTitle ?></li>
       </ol>
     </section>
-    
+
       <div class="row">
 
         <div class="box-body">
@@ -104,7 +104,7 @@ while ($row = dbFetchAssoc($result)){
                   </td>
                    <td>
                    <a href="<?php echo WEB_ROOT; ?>process/?action=request_withdraw">
-                    <button type="button" class="btn btn-block btn-info btn-flat" onclick="approveWithdraw()" 
+                    <button type="button" class="btn btn-block btn-info btn-flat" onclick="approveWithdraw()"
                     <?php if($status1 == "" || $status1 == "confirmed" || $status1 == "pending" || $period1 <= 3 || $period1 == 5 || $status1 == "processing") echo'disabled="disabled"';
                      ?> onclick="return confirm('Are you sure to Request withdrawal?')">Withdraw</button></a>
                   </td>
@@ -115,15 +115,15 @@ while ($row = dbFetchAssoc($result)){
                   <?php foreach($requests as $request) {
                    ?>
                     <?php if($request['approval'] == 'pending'){
-                     
-                     
+
+
                      ?>
                     <div class="box box-warning">
             <div class="box-header">
               <h3 class="box-title">Receive Up</h3>
             </div>
                  <table id="bidsTable" class="table table-bordered table-responsive">
-               
+
                 <tbody>
                       <tr>
                   <th>Timer</th>
@@ -131,35 +131,35 @@ while ($row = dbFetchAssoc($result)){
                   <th>Phone</th>
                   <th>Amount</th>
                   <th>Action</th>
-                  
+
                 </tr>
                  <tr>
-                  
-                  <td><p id="demo"></p></td>
+
+                  <td><p id="demo1"></p></td>
                   <td><?php echo $request['acct_type'].' , '.$request['acct_name'].' , '.$request['acct_number'];?></td>
                    <td><?php echo $request['dream_amount']; ?></td>
                   <td><?php echo $request['phone']; ?></td>
                   <td><a href="<?php echo WEB_ROOT; ?>view/process.php?action=approveuser&userId=<?php echo $request['id']?>" class="btn btn-sm btn-success btn-flat" onclick="return confirm('Are you sure to confirm payment receipt?')">Accept Request</a></td>
-                
+
                 </tr>
                         </tbody>
                     </table>
-                    
+
             <!-- /.box-body -->
           </div>
                         <?php  }} ?>
-    
+
                   <?php $requests2 =getUpgradeRequest2($_SESSION['hlbank_user']);?>
 
                   <?php foreach($requests2 as $request2) {?>
-                    <?php if($request2['approval'] == 'pending'){ 
+                    <?php if($request2['approval'] == 'pending'){
                       ?>
                     <div class="box box-warning">
             <div class="box-header">
               <h3 class="box-title">Pay Up</h3>
             </div>
                  <table id="" class="table table-bordered table-responsive">
-               
+
                 <tbody>
                       <tr>
                   <th>Timer</th>
@@ -167,24 +167,24 @@ while ($row = dbFetchAssoc($result)){
                   <th>Phone</th>
                   <th>Amount</th>
                   <th>Action</th>
-                  
+
                 </tr>
                  <tr>
-                  
-                  <td><p id="demo"></p></td>
+
+                  <td><p id="demo2"></p></td>
                   <td><?php echo $request2['acct_type'].' , '.$request2['acct_name'].' , '.$request2['acct_number'];?></td>
                    <td><?php echo $request2['dream_amount']; ?></td>
                   <td><?php echo $request2['phone']; ?></td>
-                  
-                
+
+
                 </tr>
                         </tbody>
                     </table>
-                    
+
             <!-- /.box-body -->
           </div>
                         <?php  }} ?>
-                    
+
           <div class="box box-primary">
 
             <div class="box-header with-border">
@@ -236,7 +236,7 @@ while ($row = dbFetchAssoc($result)){
                 $value = "paid";
                 break;
 
-              
+
               default:
                 # code...
                 break;
@@ -249,8 +249,8 @@ while ($row = dbFetchAssoc($result)){
             $timestamp_mature = strtotime($row['mature_on']);
             $date_mature = date('M d, Y', $timestamp_mature);
             $time_mature = date('h:m A', $timestamp_mature);
-          
-                  
+
+
                   ?>
                 <tr>
                   <td><?php echo $dmamnt;?></td>
@@ -267,13 +267,13 @@ while ($row = dbFetchAssoc($result)){
           </div>
 
 </div>
-           <?php 
+           <?php
 $sql="SELECT * FROM upgrade_requests WHERE user_id='$userID' OR parent_id='$userID' AND approval='pending'";
 $result = dbQuery($sql);
 while ($row = dbFetchAssoc($result)) {
   $dmamnt = $row['updated_at'];
 }
-?>   
+?>
 
       </div>
 
@@ -299,18 +299,22 @@ var x = setInterval(function() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
 
-  
+
   document.getElementById("demo").innerHTML = days + "d " + hours + "h "
   + minutes + "m " + seconds + "s"+distance++;
-    
+
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s"+distance++;
+
 
   // Display the result in the element with id="demo"
-  
 
-  // If the count down is finished, write some text 
+
+  // If the count down is finished, write some text
   if (distance < 0) {
     clearInterval(x);
-    document.getElementById("demo").innerHTML = "EXPIRED";
+    document.getElementById("demo1").innerHTML = "EXPIRED";
+    document.getElementById("demo2").innerHTML = 'EXPIRED';//set text for demo element
   }
 }, 1000);
 
